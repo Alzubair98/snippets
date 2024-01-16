@@ -1,6 +1,26 @@
-import { title } from "process";
+import { db } from "@/db";
+import { redirect } from "next/navigation";
 
 export default function SnippetCreatePate() {
+  const createSnippet = async (formData: FormData) => {
+    // This needs to be a server action!
+    "use server";
+    // Check the user inputs and make sure theyre vaild
+    const title = formData.get("title") as string;
+    const code = formData.get("code") as string;
+
+    // Create a new recored in the database
+    const snippet = await db.snippet.create({
+      data: {
+        title,
+        code,
+      },
+    });
+    console.log(snippet);
+
+    // Redirect the user back to the root route
+  };
+
   return (
     <form>
       <h3 className="font-bold m-3">Create a Snippet</h3>
