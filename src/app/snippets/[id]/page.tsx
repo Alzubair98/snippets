@@ -16,12 +16,14 @@ export default async function SnippetShowPage(props: SnippetShowPageProps) {
     },
   });
 
+  if (!snippet) {
+    return notFound();
+  }
+
   return (
     <div>
       <div className="flex m-4 justify-between items-center">
-        <h1 className="text-xl font-bold">
-          {snippet ? snippet.title : notFound()}{" "}
-        </h1>
+        <h1 className="text-xl font-bold">{snippet.title}</h1>
         <div className="flex gap-4">
           <button className="p-2 border rounded">Edit</button>
           <button className="p-2 border rounded">Delete</button>
