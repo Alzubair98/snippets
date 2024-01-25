@@ -2,6 +2,7 @@
 
 import { db } from "@/db";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export async function editSnippet(id: number, code: string) {
   await db.snippet.update({
@@ -17,6 +18,7 @@ export async function deleteSnippet(id: number) {
     where: { id },
   });
 
+  revalidatePath("/"); // get new data from the database update cach
   redirect("/");
 }
 
@@ -59,6 +61,8 @@ export const createSnippet = async (
       };
     }
   }
+
+  revalidatePath("/");
   // Redirect the user back to the root route
   redirect("/");
 };
