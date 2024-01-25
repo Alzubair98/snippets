@@ -19,3 +19,22 @@ export async function deleteSnippet(id: number) {
 
   redirect("/");
 }
+
+export const createSnippet = async (formData: FormData) => {
+  // This needs to be a server action!
+  "use server";
+  // Check the user inputs and make sure theyre vaild
+  const title = formData.get("title") as string;
+  const code = formData.get("code") as string;
+
+  // Create a new recored in the database
+  const snippet = await db.snippet.create({
+    data: {
+      title,
+      code,
+    },
+  });
+
+  // Redirect the user back to the root route
+  redirect("/");
+};
